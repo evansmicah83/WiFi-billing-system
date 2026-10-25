@@ -1,0 +1,6 @@
+{
+  "name": "SmartLinkNet Kenya - ISP Billing & MikroTik Automation",
+  "description": "Multi-tenant ISP billing, Hotspot, PPPoE, MikroTik automation, CGNAT remote management, and public IP platform for Kenyan internet service providers.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,1164 @@
+# MASTER COMMAND PROMPT: SMARTLINKNET KENYA
+## Complete ISP Billing, Hotspot, PPPoE, MikroTik Automation, CGNAT Remote Management and Public IP Platform
+
+### 1. ROLE AND OBJECTIVE
+
+Act as a senior telecommunications network architect, MikroTik RouterOS engineer, ISP billing software architect, full-stack TypeScript developer, FreeRADIUS engineer, Linux VPN administrator, cybersecurity specialist, and Kenyan payment integration engineer.
+
+Build **SmartLinkNet Kenya**, a production-oriented, multi-tenant ISP billing and network automation platform for Kenyan internet service providers, fibre operators, wireless ISPs, Wi-Fi hotspot businesses, apartment internet providers, estate networks, hotels, schools, cybercafés, and independent internet resellers.
+
+The platform must work with internet obtained through any lawful upstream source, including:
+
+- Safaricom, Zuku, Faiba, and other fibre providers.
+- Fibre-to-the-home (FTTH) and fibre-to-the-building (FTTB).
+- Dedicated leased lines.
+- Wireless point-to-point backhaul.
+- Ethernet handoffs.
+- Starlink and other satellite connections.
+- Dynamic WAN connections.
+- Private WAN addresses and carrier-grade NAT (CGNAT).
+- Multiple upstream connections and supported failover arrangements.
+
+Do not assume that every ISP owns public IP addresses or has direct inbound connectivity to its routers.
+
+The platform must allow an operator to manage customers, routers, internet packages, payments, Hotspot vouchers, PPPoE subscribers, bandwidth policies, network monitoring, IP allocation, and reseller operations from one dashboard.
+
+The objective is to automate the entire internet resale business lifecycle, from router enrollment to subscriber authentication, payment collection, access activation, suspension, accounting, and network diagnostics.
+
+**Build the real application.** Do not stop at a UI prototype, mock API, architecture document, or collection of sample screens.
+
+---
+
+### 2. MANDATORY TECHNOLOGY STACK
+
+Use the following architecture.
+
+**Frontend**
+- React.
+- Vite.
+- TypeScript.
+- Tailwind CSS.
+- React Router.
+- TanStack Query.
+- React Hook Form.
+- Zod validation.
+- Recharts for analytics.
+- A consistent, accessible component system.
+
+**Backend**
+- Node.js.
+- TypeScript.
+- Express.js.
+- Modular controllers, services, repositories, and middleware.
+- REST API.
+- OpenAPI/Swagger documentation.
+- Background jobs for billing, payment reconciliation, router provisioning, and subscription expiry.
+- WebSocket or Server-Sent Events for appropriate live operational updates.
+
+**Infrastructure**
+- PostgreSQL as the primary application database.
+- Self-hosted FreeRADIUS with native PostgreSQL SQL integration.
+- Redis for queues, caching, distributed locks, and temporary state where appropriate.
+- MikroTik RouterOS API/API-SSL integration.
+- WireGuard for the preferred RouterOS v7 management VPN.
+- A supported Linux VPN gateway or equivalent reachable tunnel endpoint.
+- Docker Compose for development and reproducible deployments.
+- Linux for production hosting.
+- Automated tests and CI-ready project scripts.
+
+Use a modular monolith initially, with clearly separated business services. Do not introduce unnecessary microservices that complicate the first production release.
+
+Use native SQL-backed FreeRADIUS integration. Do not replace the RADIUS server with application-only authentication, HTTP-only subscriber authentication, or a managed external RADIUS service.
+
+Keep application authentication separate from subscriber network authentication.
+
+---
+
+### 3. MULTI-TENANT ISP MANAGEMENT
+
+Support multiple independent ISP organizations using the same platform.
+
+Each organization must have isolated:
+
+- Business profile and settings.
+- Branches and network sites.
+- Staff and permissions.
+- MikroTik routers.
+- Upstream connections.
+- Address pools and public IP allocations.
+- Hotspot customers and vouchers.
+- PPPoE subscribers.
+- Packages and pricing.
+- Payments and invoices.
+- Resellers and commissions.
+- Network configurations.
+- Monitoring and audit records.
+
+Implement the following roles:
+
+1. Platform super administrator.
+2. ISP owner.
+3. ISP administrator.
+4. Network engineer.
+5. Field technician.
+6. Cashier or accountant.
+7. Customer support agent.
+8. Reseller or sub-reseller.
+9. Subscriber or customer.
+
+Implement server-side role-based access control and tenant isolation throughout the API and database.
+
+A user from one ISP must never be able to access another ISP's subscribers, router credentials, network configurations, financial records, or monitoring information.
+
+Use KES as the default currency and `Africa/Nairobi` as the default business timezone. Support configurable currencies and timezones for future expansion.
+
+---
+
+### 4. SMARTLINKNET BRAND IDENTITY AND COLOR SYSTEM
+
+Use the following official interface palette throughout the application.
+
+| Design token | Hex color | Purpose |
+|---|---|---|
+| Primary navy | `#123B5D` | Main brand, navigation, headings |
+| Dark navy | `#0B2A43` | Hover states and dark surfaces |
+| Telecom blue | `#1976D2` | Primary buttons, links, selected controls |
+| Network cyan | `#00B8D9` | Network highlights and selected chart details |
+| Success green | `#16A34A` | Successful payments and online services |
+| Warning amber | `#F59E0B` | Pending actions and degraded services |
+| Danger red | `#DC2626` | Failed payments and critical errors |
+| Page background | `#F5F8FC` | Main light-theme background |
+| Surface white | `#FFFFFF` | Cards, tables, forms, dialogs |
+| Border slate | `#E2E8F0` | Borders and separators |
+| Primary text | `#172B4D` | Main text |
+| Secondary text | `#64748B` | Supporting text and timestamps |
+| Dark background | `#0B1F33` | Optional dark theme |
+
+Create reusable CSS variables or design tokens. Do not hardcode inconsistent shades throughout the codebase.
+
+#### UI requirements
+
+Build a professional, clean, telecommunications-focused dashboard with:
+
+- A collapsible sidebar.
+- A compact top navigation bar.
+- Organization and site selectors.
+- Search and notification controls.
+- Consistent page titles and contextual actions.
+- Responsive tables with sorting, filtering, and pagination.
+- Restrained KPI cards.
+- Clear operational charts.
+- Accessible forms and dialogs.
+- Useful loading, empty, success, and error states.
+- Consistent spacing and typography.
+- A functional optional dark theme.
+
+Do not create excessive gradients, oversized cards, unnecessary animations, or repetitive AI-generated dashboard layouts.
+
+Use explicit text labels and icons in addition to status colors.
+
+#### Required navigation
+
+1. Overview.
+2. Customers.
+3. Hotspot.
+4. PPPoE.
+5. Packages.
+6. Vouchers.
+7. Payments.
+8. Invoices.
+9. Routers.
+10. Connect MikroTik.
+11. Sites and Branches.
+12. Upstream Networks.
+13. IP Address Management.
+14. CGNAT Management.
+15. Public IP Services.
+16. Network Monitoring.
+17. Resellers.
+18. Support Tickets.
+19. Inventory.
+20. Reports.
+21. Users and Permissions.
+22. Audit Logs.
+23. System Settings.
+
+Only expose modules that have a working implementation, or clearly mark incomplete modules as unavailable rather than presenting fake functionality.
+
+---
+
+### 5. AUTOMATED MIKROTIK CONNECTION AND ONE-SCRIPT PROVISIONING
+
+Build a guided **Connect MikroTik** wizard.
+
+The objective is to allow an ISP administrator or field technician with basic MikroTik knowledge to connect a router and apply the appropriate configuration without manually configuring every feature.
+
+#### Enrollment workflow
+
+1. The administrator creates a router record.
+2. The system assigns a unique router ID, organization, site, and intended configuration profile.
+3. The backend issues a short-lived enrollment token.
+4. The dashboard generates a versioned RouterOS bootstrap script.
+5. The technician imports or pastes the script into the router using a supported local management method.
+6. The router applies only the approved configuration.
+7. The router initiates its secure management connection.
+8. The backend verifies the router identity, tunnel status, and management reachability.
+9. The system applies the approved Hotspot, PPPoE, RADIUS, NAT, and monitoring configuration.
+10. The system tests the required services and reports the actual result.
+
+#### Router provisioning requirements
+
+Support:
+
+- RouterOS v7 as the primary target.
+- Explicitly tested RouterOS v6 compatibility where feasible.
+- Router identity and version detection.
+- WAN and LAN interface discovery.
+- Bridge and VLAN-aware configuration profiles.
+- DHCP client and static WAN addressing.
+- PPPoE upstream connections.
+- Hotspot server configuration.
+- PPPoE server configuration.
+- RADIUS authentication and accounting.
+- Address pools.
+- DNS settings.
+- NAT.
+- Firewall policies.
+- Bandwidth and queue policies.
+- Router monitoring.
+- Configuration backups.
+- Configuration version history.
+- Configuration drift detection.
+- Error reporting.
+- Safe rollback for reversible operations.
+
+Make the bootstrap script idempotent. Repeated execution must not create duplicate peers, routes, firewall rules, address pools, or services.
+
+Inspect existing configurations before modifying them. Generate a configuration preview and require explicit approval for potentially disruptive changes.
+
+Never reset a production router, disable its firewall, or overwrite existing VLANs, bridges, routes, or addressing without explicit authorization.
+
+A single bootstrap script must not be presented as universally safe for every RouterOS configuration. Generate configuration according to the selected topology and supported router capabilities.
+
+---
+
+### 6. CGNAT BYPASS AND REMOTE MANAGEMENT ARCHITECTURE
+
+This section is mandatory. It must be implemented in the actual VPN infrastructure, backend, router provisioning scripts, database, routing configuration, and dashboard.
+
+**The local MikroTik does not need its own public IP address for remote management. The management server or VPN gateway must, however, have a reachable endpoint or another documented connectivity arrangement.**
+
+#### 6.1. Outbound-initiated tunnel
+
+Configure the MikroTik to initiate a persistent outbound encrypted management tunnel to the SmartLinkNet infrastructure.
+
+The backend must not rely on direct inbound access to the router's WAN IP.
+
+Use:
+
+- **WireGuard as the preferred protocol for RouterOS v7.**
+- SSTP or L2TP/IPsec only as documented, tested alternatives where justified.
+- A supported Linux VPN gateway or equivalent endpoint.
+- A configurable management VPN subnet.
+- Unique router identities and peer credentials.
+
+Generate the corresponding router-side and server-side configuration.
+
+The tunnel must support NAT traversal, keepalive settings where required, reconnection, peer revocation, credential rotation, and health monitoring.
+
+#### 6.2. Automatic private management IP assignment
+
+When a router enrolls:
+
+1. Validate its enrollment token.
+2. Assign a unique private management IP.
+3. Register its tunnel peer.
+4. Configure the necessary routes and firewall policies.
+5. Verify the tunnel handshake.
+6. Verify bidirectional reachability.
+7. Test the RouterOS API or API-SSL.
+8. Save the verified state in the database.
+
+Prevent IP conflicts and management-subnet overlap with subscriber LANs or existing VPNs.
+
+#### 6.3. API-over-tunnel routing
+
+All subsequent backend-to-router management traffic must travel through the established management VPN.
+
+This includes:
+
+- RouterOS API/API-SSL.
+- Interface monitoring.
+- Router health checks.
+- Approved configuration updates.
+- Hotspot and PPPoE administration.
+- Diagnostics.
+- Configuration backups.
+
+Do not fall back to unrestricted direct WAN access when the tunnel is unavailable.
+
+Bind management operations to the correct tenant and router identity. Restrict the VPN so one router cannot access another router's management services without explicit authorization.
+
+When a tunnel is unavailable, queue eligible jobs, report the router as unreachable, and only mark a job successful after verification.
+
+#### 6.4. Remote management security
+
+- Do not expose RouterOS API or WinBox to the unrestricted internet.
+- Use individual router identities and unique credentials.
+- Encrypt management traffic.
+- Restrict access to approved services and routes.
+- Rotate and revoke enrollment credentials.
+- Maintain auditable configuration-change records.
+- Monitor tunnel availability and last successful handshake.
+- Support multiple VPN gateways as capacity grows.
+- Provide deployment, backup, recovery, and firewall documentation.
+
+#### 6.5. Required CGNAT acceptance test
+
+Demonstrate that a test MikroTik behind a private dynamic WAN address or simulated CGNAT can:
+
+1. Establish an outbound tunnel.
+2. Obtain its unique management IP.
+3. Reconnect after an interruption or WAN address change.
+4. Accept API requests through the tunnel.
+5. Reject unauthorized management access.
+6. Report its correct health status.
+7. Apply approved configuration changes without creating duplicates.
+
+Do not declare the feature complete based solely on a configured peer or successful enrollment record.
+
+---
+
+### 7. OPTIONAL PREMIUM MODULE: DEDICATED PUBLIC IP SERVICES
+
+Build an optional module that allows an ISP to offer dedicated public IP connectivity to eligible PPPoE or Hotspot subscribers, even when its local upstream connection uses CGNAT.
+
+This feature is separate from the management VPN.
+
+It requires a reachable data-centre endpoint, legitimate public IP allocation or routed address space, correct routing, and subscriber-specific forwarding or routing configuration.
+
+Do not claim that a tunnel can create a public IP address or that a public IP is usable without appropriate upstream routing.
+
+#### 7.1. Data-centre gateway
+
+Support a configurable Linux gateway or equivalent endpoint with:
+
+- A legitimate public IPv4 address or routed prefix.
+- Upstream routing.
+- IP forwarding.
+- Firewall policies.
+- A supported tunnel endpoint.
+- Public IP address allocation and reservation.
+- Subscriber-specific routes or NAT mappings.
+- Traffic monitoring.
+- Configuration validation.
+
+Use WireGuard for the preferred data-centre-to-MikroTik tunnel.
+
+The management VPN and subscriber data-plane tunnels must be separated or protected by equivalent strict routing and firewall isolation.
+
+#### 7.2. Public IP allocation workflow
+
+1. The ISP enables the premium module.
+2. An authorized administrator configures a data-centre endpoint.
+3. The system validates the public IP allocation and routing prerequisites.
+4. The ISP creates an eligible subscriber assignment.
+5. The system reserves an available public IP.
+6. The assignment is associated with the correct ISP, site, router, and subscriber.
+7. The system creates the required tunnel, routes, or NAT mappings.
+8. The data-centre gateway applies its approved forwarding configuration.
+9. The local MikroTik receives the necessary subscriber-specific configuration.
+10. The system verifies routing, address mapping, and relevant connectivity.
+11. The service becomes active only after the required checks succeed.
+
+Support address revocation, reassignment, subscription expiry, rollback, and audit history.
+
+#### 7.3. Routing and 1:1 NAT
+
+Select the implementation based on the actual network design.
+
+**Routed public IP:** Route the assigned address or prefix through the tunnel to the subscriber or local router, with correct forward and return paths.
+
+**1:1 NAT:** Map the assigned public address to the subscriber's private address using explicitly scoped source and destination NAT rules and suitable firewall policies.
+
+**Data-centre gateway forwarding:** Forward the subscriber's relevant traffic through the tunnel, with correct routing, source-address handling, and symmetric return traffic.
+
+For PPPoE, bind the mapping to the correct subscriber and session.
+
+For Hotspot, bind it to a defined subscriber or lease identity and handle lease changes, expiry, and reassignment.
+
+Do not create broad NAT rules that affect unrelated subscribers. Prevent source-address spoofing, conflicting assignments, and cross-subscriber traffic.
+
+Public inbound connectivity must only be advertised when the address is correctly routed and the applicable firewall policies allow the required traffic.
+
+#### 7.4. Premium billing integration
+
+Support configurable recurring charges or package add-ons for dedicated public IP services.
+
+Record:
+
+- Price and billing cycle.
+- Public IP assignment.
+- Subscriber identity.
+- Start and expiry dates.
+- Payment status.
+- Tunnel and routing status.
+- Provisioning status.
+- Suspension and cancellation.
+- Address release and reassignment history.
+
+If payment succeeds but network provisioning fails, preserve the payment and retry the provisioning job safely. Do not report the public IP service as active before the required network checks succeed.
+
+---
+
+### 8. SELF-HOSTED FREERADIUS AND CENTRALIZED AAA
+
+Implement self-hosted FreeRADIUS using its native PostgreSQL SQL module for centralized authentication, authorization, and accounting.
+
+Support both Hotspot and PPPoE subscribers across multiple MikroTik routers.
+
+Implement:
+
+- Authentication.
+- Authorization.
+- Accounting start, interim-update, and stop.
+- Router/NAS registration.
+- Unique RADIUS shared secrets.
+- SQL-backed user and group profiles.
+- Subscriber rate limits.
+- Subscription suspension and reactivation.
+- Concurrent-session policies.
+- Session history.
+- Usage tracking.
+- Supported disconnect and CoA operations.
+- Health checks.
+- Timeout and retry handling.
+- Logging and reconciliation.
+
+Use the standard SQL-backed structures where applicable, including `radcheck`, `radreply`, `radusergroup`, `radgroupcheck`, `radgroupreply`, `nas`, and `radacct`.
+
+The application database must be the authoritative source for commercial subscriptions, package assignments, and payment state. FreeRADIUS must enforce the resulting network authorization policies.
+
+Synchronize changes reliably. An expired subscriber must not retain unrestricted access merely because an old session remains active.
+
+Use supported session disconnect or CoA mechanisms where available and reconcile stale accounting records.
+
+Never expose RADIUS secrets to the frontend, customers, or unauthorized staff.
+
+Test actual authentication and accounting behavior against supported RouterOS versions.
+
+---
+
+### 9. COMPLETE HOTSPOT AND CAPTIVE PORTAL BILLING
+
+Build a production-oriented Hotspot module.
+
+Support:
+
+- MikroTik Hotspot servers.
+- Captive portal login.
+- Voucher generation.
+- Username/password authentication.
+- Daily, hourly, weekly, and monthly passes.
+- Time-based and data-based packages.
+- One-time and explicitly configured multi-use vouchers.
+- Device and simultaneous-session limits.
+- Optional MAC-based access controls.
+- Custom ISP branding.
+- Customer registration where enabled.
+- Usage tracking.
+- Session expiry.
+- Automatic suspension.
+- Speed limits.
+- Customer session history.
+- Manual session termination.
+- Customer self-service.
+
+#### Captive portal
+
+Build a mobile-first portal that loads quickly over constrained connections.
+
+Display:
+
+- ISP logo and business name.
+- Available packages and prices in KES.
+- Login and purchase options.
+- M-Pesa payment instructions.
+- Terms of service.
+- Privacy information.
+- Support contacts.
+- Subscription and session status.
+
+Support a configurable, secure walled garden for the portal and required payment resources.
+
+Document captive portal detection, DNS, domain, and certificate requirements. Do not promise that all HTTPS destinations can be transparently redirected.
+
+#### Voucher management
+
+Allow authorized operators to configure:
+
+- Username format.
+- Password generation.
+- Prefix.
+- Package.
+- Validity.
+- Data allowance.
+- Speed limits.
+- Device limits.
+- Activation policy.
+- Expiry policy.
+- Site and Hotspot assignment.
+
+Generate vouchers in batches, export them as PDF or CSV, and provide print-friendly sheets.
+
+Prevent predictable credentials, duplicate active vouchers, and unauthorized reuse.
+
+---
+
+### 10. COMPLETE PPPoE SUBSCRIBER MANAGEMENT
+
+Support residential, apartment, estate, business, and enterprise PPPoE customers.
+
+Implement:
+
+- PPPoE server configuration.
+- Subscriber registration.
+- Unique usernames and secure credentials.
+- Service profiles.
+- Dynamic IP pools.
+- Static IP assignment.
+- Package-based speed limits.
+- Monthly subscriptions.
+- Grace periods.
+- Expiration.
+- Suspension and restoration.
+- Concurrent-session policies.
+- Accounting.
+- Router and site reassignment.
+- Package upgrades and downgrades.
+- Installation charges.
+- Optional deposits.
+- Corporate plans.
+- Customer session termination.
+
+Use centralized FreeRADIUS authentication and accounting.
+
+Verify that subscriber authorization, address assignment, bandwidth policies, and suspension behavior work in the actual tested network environment.
+
+---
+
+### 11. KENYAN M-PESA AND PAYMENT AUTOMATION
+
+Integrate Safaricom Daraja APIs using supported documentation and separate sandbox and production settings.
+
+Support:
+
+- STK Push.
+- Customer phone number validation.
+- Transaction initiation.
+- Callback handling.
+- Payment verification and reconciliation.
+- Successful, pending, failed, cancelled, and timed-out transactions.
+- Duplicate callback protection.
+- Payment history.
+- Receipts.
+- Refund records where supported.
+- Automated subscription activation.
+- Failed provisioning recovery.
+
+Never activate service merely because a customer submits a screenshot or claims to have paid.
+
+Use idempotency keys, unique transaction identifiers, and transactional database updates.
+
+#### Verified payment workflow
+
+1. Initiate the payment.
+2. Save the transaction record.
+3. Receive and validate the callback.
+4. Correlate it with the original payment request.
+5. Verify the payment using the supported mechanisms.
+6. Record the confirmed payment exactly once.
+7. Allocate the package or voucher.
+8. Update the subscription.
+9. Update RADIUS authorization.
+10. Apply required session enforcement.
+11. Notify the customer.
+12. Record an audit event.
+
+If payment succeeds but provisioning fails, preserve the transaction and retry the activation job without double charging or issuing duplicate service.
+
+Keep production credentials in environment variables or an appropriate secrets manager. Never hardcode or fabricate production credentials.
+
+---
+
+### 12. PACKAGES, BILLING AND RECURRING SUBSCRIPTIONS
+
+Build a configurable billing engine.
+
+Support:
+
+- Hotspot passes.
+- PPPoE residential plans.
+- Apartment plans.
+- Business packages.
+- Enterprise packages.
+- Data bundles.
+- Promotional packages.
+- Installation charges.
+- Optional add-ons, including dedicated public IP services.
+
+Each package must support:
+
+- Name and description.
+- Price in KES.
+- Billing cycle.
+- Download and upload speeds.
+- Data quota.
+- Validity.
+- Grace period.
+- Concurrent sessions.
+- Installation fee.
+- Fair usage policy.
+- Renewal settings.
+- Site restrictions.
+- Active or inactive state.
+
+Implement invoices, invoice items, receipts, payment allocation, outstanding balances, adjustments, refund records, and financial reporting.
+
+Distinguish recurring invoices from successfully collected payments. Automatic collection must only be enabled when the supported payment mechanism and customer authorization are in place.
+
+Use background jobs for expiry, reminders, renewals, reconciliation, and suspension.
+
+---
+
+### 13. RESELLER AND MULTI-BRANCH MANAGEMENT
+
+Allow ISP owners to create and manage reseller accounts.
+
+Support:
+
+- Assigned sites.
+- Customer limits.
+- Package permissions.
+- Voucher allocation.
+- Pricing permissions.
+- Sales commissions.
+- Credit limits where enabled.
+- Settlement reports.
+- Customer management permissions.
+
+Prevent resellers from accessing unauthorized customers, routers, tenant settings, or financial records.
+
+Provide reseller dashboards for sales, collections, commissions, vouchers, and subscription activity.
+
+---
+
+### 14. BANDWIDTH, QUEUES AND QUALITY OF SERVICE
+
+Support:
+
+- Upload and download rate limits.
+- RADIUS-provided rate limits.
+- MikroTik queue profiles.
+- Simple queues where appropriate.
+- Queue trees where the network design requires them.
+- PCQ for shared bandwidth where suitable.
+- Burst settings where supported.
+- Per-subscriber policies.
+- Fair usage policies.
+- Site-level traffic monitoring.
+
+Select the configuration based on RouterOS version and network topology.
+
+Do not blindly apply the same queue configuration to every router. Detect conflicts and preview potentially disruptive changes.
+
+---
+
+### 15. WAN, NAT, IP ADDRESS MANAGEMENT AND UPSTREAM CONNECTIVITY
+
+Build a network configuration wizard supporting:
+
+- DHCP WAN.
+- Static WAN.
+- PPPoE upstream.
+- VLAN-tagged upstream.
+- Multiple WAN connections.
+- Supported failover.
+- Policy-based routing where appropriate.
+- IPv4 and IPv6.
+- Public and private addressing.
+- CGNAT.
+- VPN and tunnel connectivity.
+
+#### NAT automation
+
+Generate appropriate masquerade or source NAT rules for subscriber networks that require IPv4 translation.
+
+Detect equivalent existing rules and avoid duplicates.
+
+Scope each rule to the intended subscriber networks and WAN interface.
+
+Preserve unrelated production firewall and routing configuration.
+
+Provide diagnostics for missing default routes, incorrect gateways, DNS failures, invalid NAT rules, and upstream outages.
+
+#### IP address management
+
+Track:
+
+- IPv4 and IPv6 allocations.
+- Address pools.
+- Prefixes and gateways.
+- Public and private addresses.
+- Upstream provider.
+- Allocation method.
+- Router and subscriber association.
+- Reserved, available, allocated, and deprecated addresses.
+- Assignment history.
+
+Clearly distinguish the router's configured WAN address, an externally observed address, a legitimately routed public allocation, and verified inbound reachability.
+
+Do not claim that the platform can manufacture a public IP address or bypass upstream restrictions without a valid routing arrangement.
+
+---
+
+### 16. CUSTOMER MANAGEMENT AND SELF-SERVICE
+
+Build customer registration and account management with:
+
+- Customer contact details.
+- Installation address.
+- Subscriber type.
+- Assigned site and router.
+- Hotspot or PPPoE service.
+- Subscription status.
+- Package details.
+- Payment history.
+- Usage records where available.
+- Session history.
+- Support tickets.
+- Installation date.
+- Technician notes.
+
+Provide a customer portal that allows users to:
+
+- View their package and expiry.
+- Purchase or renew a package.
+- Pay through M-Pesa.
+- View receipts.
+- View usage where reliable data is available.
+- Update permitted profile details.
+- Submit support tickets.
+- View relevant service notices.
+
+Handle personal data according to applicable Kenyan data-protection requirements.
+
+---
+
+### 17. NETWORK MONITORING AND DIAGNOSTICS
+
+Build a live operations dashboard with:
+
+- Total customers.
+- Active Hotspot sessions.
+- Active PPPoE sessions.
+- Suspended subscribers.
+- Expiring packages.
+- Online and offline routers.
+- Tunnel health.
+- WAN status.
+- Interface status.
+- CPU and memory utilization.
+- Traffic rates.
+- Latency and packet loss where measurable.
+- RADIUS health.
+- Payment callback health.
+- Failed provisioning jobs.
+- Revenue and outstanding balances.
+
+Use supported RouterOS APIs and/or SNMP where appropriate.
+
+Use configurable polling intervals, bounded retries, backoff, and cached monitoring results. Do not make every dashboard load synchronously query every router.
+
+Provide diagnostics for:
+
+- WAN interface down.
+- Missing default route.
+- DNS resolution failure.
+- Incorrect NAT configuration.
+- Duplicate IP addresses.
+- RADIUS timeouts.
+- Invalid shared secrets.
+- Failed subscriber authentication.
+- Expired subscriptions.
+- PPPoE profile problems.
+- Captive portal issues.
+- VPN tunnel failures.
+- Management API failures.
+- CGNAT limitations.
+- Public IP routing problems.
+
+Display diagnostic evidence, likely causes, recommended actions, and whether a repair is safe to automate.
+
+---
+
+### 18. FIBRE AND ACCESS TECHNOLOGY SUPPORT
+
+Keep the platform independent of a specific access technology.
+
+Support metadata for:
+
+- FTTH.
+- FTTB.
+- Ethernet distribution.
+- Wireless backhaul.
+- Wi-Fi hotspots.
+- Apartment and estate networks.
+- Satellite internet.
+- Other supported IP-based access networks.
+
+Allow operators to record OLT, PON port, splitter, FAT, fibre distribution point, building, floor, ONT/ONU, and installation details.
+
+Do not assume that every MikroTik can provision every OLT or ONU. Implement vendor-specific integrations only when supported by documented interfaces. Otherwise, provide infrastructure records and authorized manual provisioning workflows.
+
+---
+
+### 19. DATABASE ARCHITECTURE
+
+Create proper PostgreSQL migrations, relationships, constraints, indexes, and tenant-scoped authorization for at least:
+
+- `tenants`
+- `tenant_settings`
+- `users`
+- `roles`
+- `permissions`
+- `user_roles`
+- `branches`
+- `network_sites`
+- `routers`
+- `router_credentials`
+- `router_enrollments`
+- `router_config_versions`
+- `router_health_metrics`
+- `provisioning_jobs`
+- `vpn_gateways`
+- `vpn_peers`
+- `management_ip_allocations`
+- `upstream_connections`
+- `network_interfaces`
+- `ip_pools`
+- `ip_addresses`
+- `public_ip_allocations`
+- `public_ip_services`
+- `public_ip_mappings`
+- `customers`
+- `customer_addresses`
+- `subscriber_accounts`
+- `hotspot_vouchers`
+- `packages`
+- `package_assignments`
+- `subscriptions`
+- `invoices`
+- `invoice_items`
+- `payments`
+- `payment_callbacks`
+- `refunds`
+- `usage_records`
+- `radius_sessions`
+- `support_tickets`
+- `resellers`
+- `reseller_commissions`
+- `notifications`
+- `audit_logs`
+- `background_jobs`
+
+Add standard FreeRADIUS SQL tables and any documented custom mappings required.
+
+Use database transactions for payment confirmation, subscription activation, IP assignment, voucher issuance, and authorization changes.
+
+Use unique constraints and idempotency keys to prevent duplicate payments, duplicate vouchers, and conflicting IP assignments.
+
+Do not place all application data into a single JSON column.
+
+Store sensitive credentials encrypted or through an appropriate secret-management mechanism. Never store plaintext subscriber or router passwords unnecessarily.
+
+---
+
+### 20. BACKEND API AND JOB PROCESSING
+
+Implement versioned API modules for:
+
+- Authentication and sessions.
+- Organizations and staff.
+- Customers.
+- Hotspot vouchers.
+- PPPoE subscribers.
+- Packages and subscriptions.
+- Invoices and payments.
+- M-Pesa callbacks.
+- Router enrollment.
+- VPN gateways and peers.
+- Router health and monitoring.
+- Provisioning jobs.
+- Upstream connections.
+- IP address management.
+- Dedicated public IP services.
+- Reports and analytics.
+- Notifications.
+- Support tickets.
+- Audit logs.
+
+Use request validation, authorization middleware, consistent errors, pagination, rate limiting, and OpenAPI documentation.
+
+Use durable background jobs for operations that must survive restarts, including:
+
+- Payment reconciliation.
+- Subscriber activation.
+- Subscription expiry.
+- Router configuration.
+- VPN peer provisioning.
+- Public IP assignment.
+- Monitoring.
+- Notifications.
+- Failed-job recovery.
+
+Implement retry limits, idempotency, observability, and manual recovery controls.
+
+---
+
+### 21. SECURITY AND RELIABILITY
+
+Implement:
+
+- Strong authentication.
+- Secure password hashing.
+- Short-lived access tokens.
+- Securely managed refresh sessions.
+- Role-based access control.
+- Tenant isolation.
+- Request validation.
+- Rate limiting.
+- CORS restrictions.
+- CSRF protection where applicable.
+- Secure cookies where applicable.
+- Encryption in transit.
+- Secrets management.
+- Database least privilege.
+- Encrypted backups.
+- Audit logs.
+- Login throttling.
+- Dependency vulnerability checks.
+- Router enrollment protection.
+- VPN peer isolation.
+- Payment callback validation.
+- Safe configuration previews.
+- Controlled rollback.
+
+Never expose router API credentials, RADIUS secrets, VPN private keys, or production payment credentials in frontend code, logs, or source control.
+
+Never execute arbitrary shell commands supplied by dashboard users.
+
+Never open management ports to unrestricted internet access by default.
+
+Never modify a production router's firewall or routing configuration without authorization and appropriate safeguards.
+
+---
+
+### 22. REQUIRED TESTING AND ACCEPTANCE SCENARIOS
+
+Write automated unit, integration, and end-to-end tests.
+
+#### Scenario A: Hotspot reseller
+
+Register an ISP, create a site, enroll a router, establish RADIUS authentication, create a package, generate a voucher, authenticate a test client, record accounting, and verify expiration.
+
+#### Scenario B: PPPoE customer
+
+Create a subscriber, assign a package, authenticate through FreeRADIUS, apply the speed policy, record accounting, suspend the account, and verify session enforcement.
+
+#### Scenario C: M-Pesa
+
+Initiate STK Push, process a simulated successful callback, activate the subscription once, generate a receipt, and verify duplicate and failed callback handling.
+
+#### Scenario D: WAN and NAT
+
+Configure a test WAN, apply scoped NAT rules, verify routing and DNS, simulate an upstream outage, and confirm that the system reports the actual state.
+
+#### Scenario E: CGNAT management
+
+Enroll a router behind simulated CGNAT, establish its outbound tunnel, assign a management IP, verify API-over-tunnel routing, interrupt connectivity, restore it, and confirm safe recovery.
+
+#### Scenario F: Dedicated public IP
+
+Using a controlled lab with a valid test allocation, configure a data-centre endpoint, assign a public IP to a test subscriber, verify the selected routing or NAT design, check return traffic, and confirm correct teardown.
+
+Do not claim that public internet reachability has been tested if the environment lacks a genuine reachable public allocation and appropriate upstream routing.
+
+#### Scenario G: Multi-tenancy
+
+Create two ISPs and verify that users from either tenant cannot access the other's data or management network.
+
+#### Scenario H: Configuration failure
+
+Disconnect a router during provisioning, verify recoverable job state, restore the connection, and confirm that retries do not duplicate configuration.
+
+#### Scenario I: Security
+
+Test unauthorized enrollment, invalid credentials, revoked peers, duplicate payments, IP conflicts, and privilege escalation attempts.
+
+For each scenario, distinguish automated tests, simulated tests, lab-verified results, and production-verified results.
+
+---
+
+### 23. WINDOWS DEVELOPMENT AND LINUX DEPLOYMENT
+
+Provide complete source code and documentation.
+
+Include:
+
+- `.env.example` with placeholders only.
+- PostgreSQL migrations.
+- FreeRADIUS configuration.
+- Docker Compose.
+- RouterOS bootstrap templates.
+- VPN gateway configuration.
+- Database backup and restore procedures.
+- API documentation.
+- Testing instructions.
+- Security hardening checklist.
+- Troubleshooting guide.
+- Linux deployment instructions.
+- Windows development instructions.
+- Production go-live checklist.
+
+Provide environment variables for:
+
+- `DATABASE_URL`
+- `JWT_SECRET`
+- `JWT_REFRESH_SECRET`
+- `REDIS_URL`
+- `API_BASE_URL`
+- `COMPANY_NAME`
+- `DARAJA_CONSUMER_KEY`
+- `DARAJA_CONSUMER_SECRET`
+- `DARAJA_PASSKEY`
+- `DARAJA_SHORTCODE`
+- `DARAJA_CALLBACK_URL`
+- `RADIUS_DB_URL`
+- `RADIUS_SHARED_SECRET`
+- `ROUTER_ENROLLMENT_SECRET`
+- `VPN_GATEWAY_ENDPOINT`
+- `VPN_MANAGEMENT_SUBNET`
+- `VPN_GATEWAY_PRIVATE_KEY`
+- `VPN_GATEWAY_PUBLIC_KEY`
+- `PUBLIC_IP_SERVICE_ENABLED`
+- `SLA_APPROVAL_HOURS`
+- `SLA_PAYMENT_HOURS`
+- `SLA_ISSUE_HOURS`
+
+Treat these as configuration examples, not literal production credentials. Generate strong random secrets for the relevant environments. Protect private keys and never commit real secrets to Git.
+
+Do not hardcode `localhost` into production service URLs. Document the difference between local development, Docker networking, and deployed endpoints.
+
+---
+
+### 24. DEVELOPMENT EXECUTION PLAN
+
+Start by inspecting the existing SmartLinkNet repository.
+
+Do not overwrite working code before understanding the project structure.
+
+Report:
+
+1. Existing frontend and backend architecture.
+2. Current database and integrations.
+3. Existing working functionality.
+4. Missing features and security gaps.
+5. Required dependencies and environment variables.
+6. The implementation plan.
+
+Then build the system in these phases.
+
+**Phase 1 — Foundation**
+
+Project structure, database migrations, authentication, multi-tenancy, permissions, design tokens, and shared UI components.
+
+**Phase 2 — Billing and customers**
+
+Customer records, packages, subscriptions, invoices, payments data model, vouchers, and billing jobs.
+
+**Phase 3 — Centralized AAA**
+
+Self-hosted FreeRADIUS, native PostgreSQL integration, Hotspot and PPPoE authentication, accounting, session management, and enforcement.
+
+**Phase 4 — MikroTik integration**
+
+Router enrollment, bootstrap scripts, version-aware configuration, API integration, health monitoring, backups, and safe provisioning.
+
+**Phase 5 — CGNAT management VPN**
+
+VPN gateway, WireGuard peer provisioning, management IP allocation, API-over-tunnel routing, connection recovery, security isolation, and end-to-end testing.
+
+**Phase 6 — WAN and IP management**
+
+WAN setup, NAT automation, address allocation, upstream configuration, CGNAT diagnostics, and public IP prerequisites.
+
+**Phase 7 — M-Pesa**
+
+Daraja integration, verified callbacks, reconciliation, idempotent activation, receipts, and failure recovery.
+
+**Phase 8 — Dedicated public IP premium service**
+
+Data-centre endpoint configuration, public IP allocation, subscriber-specific routing or NAT, billing, validation, and teardown.
+
+**Phase 9 — Operations**
+
+Monitoring, reseller management, support tickets, customer portal, reports, notifications, and audit logs.
+
+**Phase 10 — Production readiness**
+
+Security testing, integration tests, deployment, backup and recovery, performance checks, and acceptance testing.
+
+After each phase:
+
+- Run migrations.
+- Run linting and type checks.
+- Run relevant automated tests.
+- Fix errors before continuing.
+- Update the documentation.
+- Identify any remaining external dependencies.
+- Provide exact commands to run the project.
+
+Do not stop after Phase 1 or after generating an implementation plan. Continue through the planned phases, subject to available development tools, access, and required external services.
+
+Do not claim a feature is implemented merely because its database tables or dashboard page exist.
+
+---
+
+### 25. FINAL DEFINITION OF DONE
+
+SmartLinkNet Kenya is ready for controlled production deployment only when the implemented features meet their acceptance criteria.
+
+The system must be able to:
+
+1. Register and manage multiple independent Kenyan ISPs.
+2. Connect eligible MikroTik routers through a guided, secure bootstrap process.
+3. Manage routers behind CGNAT through a verified outbound-initiated management VPN.
+4. Route management API traffic through the assigned VPN.
+5. Authenticate Hotspot and PPPoE subscribers using self-hosted FreeRADIUS and PostgreSQL.
+6. Generate vouchers and enforce subscriber speed and expiry policies.
+7. Collect and verify M-Pesa payments.
+8. Activate and suspend subscribers reliably.
+9. Configure approved WAN, NAT, and address policies without damaging existing production configurations.
+10. Identify the difference between private WAN addressing, CGNAT, externally observed IPs, and legitimately routed public allocations.
+11. Offer dedicated public IP services only where the necessary public IP allocation and routing infrastructure exists.
+12. Apply and verify subscriber-specific routing or 1:1 NAT mappings.
+13. Isolate management networks, tenants, routers, and subscribers.
+14. Monitor operations and recover safely from temporary failures.
+15. Maintain audit trails for payments, router changes, public IP allocations, and subscription events.
+16. Follow the SmartLinkNet Kenya color palette and reusable design system throughout the interface.
+17. Provide tested deployment instructions, backups, security documentation, and operational procedures.
+
+**Strict implementation rule:** Begin by inspecting the repository and then build the actual application. Prioritize correct network behavior, payment integrity, security, and reliable provisioning over decorative UI. Do not fabricate successful integrations or test results. Clearly identify which features are implemented, which are lab-tested, which are production-tested, and which still require physical routers, public IP allocations, provider credentials, or external infrastructure.
+
+If a requirement cannot be fulfilled under the available network topology or development environment, explain the precise limitation and implement the appropriate supported alternative rather than pretending it works.
